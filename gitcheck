@@ -1,0 +1,66 @@
+#!/bin/bash
+
+## gitcheck:
+##   Check all git repositories in subdirectories, and list the ones with changes
+##   30/07/2011, AstroFloyd, bzrcheck
+##   18/01/2013, Astrofloyd, gitcheck
+##   23/06/2015, Paul Andrieux
+##   21/09/2015, Vincent Chapron
+
+## https://github.com/vincent-chapron
+
+gitcheck() {
+# Initialise counters:
+    let count_all=0
+    let count_changed=0
+    let count_unchanged=0
+    
+# Set to 1 for more verbose output:
+    let verbose=0
+    
+# Find git repos and loop over them:
+    for repo in `find . -type d -name ".git"`
+    do
+	let count_all=${count_all}+1
+	
+    # cd to the dir that contains .git/:
+	dir=`echo -e ${repo} | sed -e 's/\/.git/\//'`
+	cd ${dir}
+	
+    # If there are changes, print some status and branch info of this repo:
+	git status -s | grep -v '??' &> /dev/null && {
+    	    let count_changed=${count_changed}+1
+            echo -e "\n\n(${count_changed}) path: \033[32m${dir}\033[0m"
+    	    git status -s | grep -v '??'
+	    repo_changed[$count_changed]=$dir
+	}
+	
+    # If verbose, print info in the case of no changes:
+	git status -s | grep -v '??' &> /dev/null || {
+    	    if [ ${verbose} -ne 0 ]; then echo -e "Nothing to do for ${dir}"; fi
+    	    let count_unchanged=${count_unchanged}+1
+	}
+	
+    # cd back:
+	cd - &> /dev/null
+    done
+    
+# Report status:
+    echo -e "\n\n${count_all} git repositories found: ";
+    echo -e "${count_changed} has/have changes, ";
+    echo -e "${count_unchanged} is/are unchanged.\n\n";
+    
+    if [ "${count_changed}" -gt 0 ]; then
+	printf "Choose a number to go go to the repotory associated: "
+	read goto
+	if [ -z "$goto" ]; then return 0; fi
+
+	if [ -n "${repo_changed[$goto]}" ]; then 
+	    chdir ${repo_changed[$goto]}
+	    printf "\033[32mChange directory to: \033[0m"
+	    pwd
+	    echo -e "\033[33mGit status:\033[0m"
+	    git status -s
+	fi
+    fi
+}
