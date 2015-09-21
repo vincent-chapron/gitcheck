@@ -1,7 +1,5 @@
 # Gitcheck
 
----
-
 Gitcheck is a script to check all change in your git repositories.
 
 ## install
