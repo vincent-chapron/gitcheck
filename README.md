@@ -1,6 +1,6 @@
 # Gitcheck
 
-Gitcheck is a script to check all change in your git repositories.
+Gitcheck is a script to check all changes in your git repositories.
 
 ## install
 
@@ -28,15 +28,15 @@ Close and re-open your terminal
 
 ## Use
 
-I work on symfony projects and sometimes I need to make change in my vendor.
+I work on Symfony projects and sometimes I need to make change in my vendor.
 
-It can be easily to lost where I change something, so i just need to use gitcheck.
+It can be easy to lose where I change something, so I just need to use gitcheck.
 
 ```bash
 gitcheck
 ```
 
-Here an example of the result:
+Here is an example of the result:
 ```bash
 (1) path: ./vendor/victoire/victoire/
  M composer.json
@@ -50,4 +50,4 @@ Here an example of the result:
 Choose a number to go go to the repotory associated: <cursor>
 ```
 
-If you press `1` and enter, you will change directory to the path associated, here `./vendor/victoire/victoire/`
+If you press `1` and enter, you will change directory to the associated path, here `./vendor/victoire/victoire/`
