@@ -47,7 +47,7 @@ Here is an example of the result:
 61 is/are unchanged.
 
 
-Choose a number to go go to the repotory associated: <cursor>
+Choose a number to go to the associated repository: <cursor>
 ```
 
 If you press `1` and enter, you will change directory to the associated path, here `./vendor/victoire/victoire/`
